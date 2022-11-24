@@ -4,7 +4,7 @@ import 'package:pharmacy/ress/style/static_style.dart';
 import 'package:pharmacy/ress/model/test_category_model.dart';
 
 class TestCategoryCard extends StatelessWidget {
-  final TestCategoryModel testCategoryModel;
+  final TestCategory testCategoryModel;
   const TestCategoryCard({
     Key? key,
     required this.testCategoryModel,
@@ -34,12 +34,12 @@ class TestCategoryCard extends StatelessWidget {
                 height: constraints.maxHeight * 0.6,
                 width: constraints.maxWidth * 0.6,
                 child: Image.asset(
-                  testCategoryModel.imagePath,
+                  testCategoryModel.mobileImage,
                   fit: BoxFit.fill,
                 ),
               ),
               Text(
-                testCategoryModel.titel,
+                testCategoryModel.name,
                 textScaleFactor: 1,
                 style: StaticStyle.textStyle(
                   fontSide: 0.02,

@@ -12,7 +12,7 @@ class Circle extends StatelessWidget {
           height: (mediaQueryData.size.height - mediaQueryData.padding.top) * 0.35,
           width: (mediaQueryData.size.height - mediaQueryData.padding.top) * 0.35,
           decoration: BoxDecoration(
-            color: const Color(0xff5BC7F9),
+            color: const Color(0xFFEC407A),
             borderRadius: BorderRadius.circular(
               (mediaQueryData.size.height - mediaQueryData.padding.top) * 0.35,
             ),
@@ -25,7 +25,7 @@ class Circle extends StatelessWidget {
             height: (mediaQueryData.size.height - mediaQueryData.padding.top) * 0.25,
             width: (mediaQueryData.size.height - mediaQueryData.padding.top) * 0.25,
             decoration: BoxDecoration(
-              color: const Color(0xff8AD6F9),
+              color: const Color(0xFFF06292),
               borderRadius: BorderRadius.circular(
                 (mediaQueryData.size.height - mediaQueryData.padding.top) * 0.25,
               ),

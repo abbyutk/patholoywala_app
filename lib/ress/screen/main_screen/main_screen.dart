@@ -19,11 +19,11 @@ class _MainScreenState extends State<MainScreen> {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final screenList = const [
+  final screenList =  [
     HomeScreen(),
     AppointmentScreen(),
     FavouriteScreen(),
-    ProfileScreen(),
+    Profile(),
   ];
 
   void setIndex(tabIndex) {
@@ -61,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             BottomBarItemData(
               icon: Icons.book_rounded,
-              lable: "Booked",
+              lable: "Bookings",
             ),
             BottomBarItemData(
               icon: Icons.account_circle_outlined,

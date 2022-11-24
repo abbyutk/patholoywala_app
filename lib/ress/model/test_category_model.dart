@@ -1,63 +1,60 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:pharmacy/config/app_config.dart';
+import 'package:pharmacy/helpers/constants.dart';
+import 'package:pharmacy/ress/services/route_controller.dart';
+import 'package:pharmacy/ress/style/static_colors.dart';
+import 'package:pharmacy/ress/style/static_style.dart';
 import 'package:pharmacy/ress/utils/static_assets_path.dart';
 
-class TestCategoryModel {
-  String titel;
-  String imagePath;
-  TestCategoryModel({
-    required this.titel,
-    required this.imagePath,
+class TestCategory{
+  final String name, image, description, mobileImage;
+  final int id;
+  TestCategory({
+    required this.name,
+    required this.image,
+    required this.description,
+    required this.mobileImage,
+    required this.id,
   });
 
-  static List<TestCategoryModel> getCategoryList() {
-    return [
-      TestCategoryModel(
-        titel: "General",
-        imagePath: StaticImagePath.rootPath + "general.png",
-      ),
-      TestCategoryModel(
-        titel: "ENT",
-        imagePath: StaticImagePath.rootPath + "ent.png",
-      ),
-      TestCategoryModel(
-        titel: "Dermatology",
-        imagePath: StaticImagePath.rootPath + "dermatology.png",
-      ),
-      TestCategoryModel(
-        titel: "Gastroenterology",
-        imagePath: StaticImagePath.rootPath + "gastroenterology.png",
-      ),
-      TestCategoryModel(
-        titel: "Neurology",
-        imagePath: StaticImagePath.rootPath + "neurology.png",
-      ),
-      TestCategoryModel(
-        titel: "Gynaecology",
-        imagePath: StaticImagePath.rootPath + "gynaecology.png",
-      ),
-      TestCategoryModel(
-        titel: "General",
-        imagePath: StaticImagePath.rootPath + "general.png",
-      ),
-      TestCategoryModel(
-        titel: "ENT",
-        imagePath: StaticImagePath.rootPath + "ent.png",
-      ),
-      TestCategoryModel(
-        titel: "Dermatology",
-        imagePath: StaticImagePath.rootPath + "dermatology.png",
-      ),
-      TestCategoryModel(
-        titel: "Gastroenterology",
-        imagePath: StaticImagePath.rootPath + "gastroenterology.png",
-      ),
-      TestCategoryModel(
-        titel: "Neurology",
-        imagePath: StaticImagePath.rootPath + "neurology.png",
-      ),
-      TestCategoryModel(
-        titel: "Gynaecology",
-        imagePath: StaticImagePath.rootPath + "gynaecology.png",
-      ),
-    ];
+  static TestCategory fromJson(json){
+    return TestCategory(
+      name: json['category_name']??'',
+      image: json['category_image']??'',
+      description: json['category_description']??'',
+      mobileImage: json['category_mobile_image']??'', 
+      id: json['category_id']??0,
+    );
   }
+
+  Widget render(BuildContext context, Constants constant){
+    return InkWell(
+      onTap: (() => AppRouteController.gotoTestScreen(context,category: id)),
+      child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                height: constant.screenHeight * 0.15,
+                width: constant.screenWidth  * 0.4,
+                child: Image.network(
+                  "${AppConfig.mainUrl}/${mobileImage}",
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Text(
+                name,
+                textScaleFactor: 1,
+                overflow: TextOverflow.ellipsis,
+                style: StaticStyle.textStyle(
+                  fontSide: 0.02,
+                  fontColor: StaticColors.primary,
+                  height: constant.screenHeight,
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+
 }

@@ -20,4 +20,10 @@ class StaticStyle {
         overflow: textOverflow,
         fontSize: getAdaptiveSized(height, fontSide),
       );
+
+  static TextStyle appointment = TextStyle(
+                                   fontSize: 20,
+                                   color: Colors.white,
+                                   fontWeight: FontWeight.bold
+                                 );
 }

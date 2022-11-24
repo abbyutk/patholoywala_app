@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy/controllers/doctor_controller.dart';
+import 'package:pharmacy/controllers/test_controller.dart';
+import 'package:pharmacy/helpers/constants.dart';
 import 'package:pharmacy/ress/style/static_colors.dart';
-import 'package:pharmacy/ress/style/static_style.dart';
 import 'package:pharmacy/ress/model/test_category_model.dart';
-
-import '../app_widget/custom_sliver_appbar.dart';
-import '../app_widget/widget_for_expended_view.dart';
-import '../app_widget/test_category_card.dart';
 
 class TestCategoryScreen extends StatelessWidget {
   const TestCategoryScreen({
@@ -14,76 +12,58 @@ class TestCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    final List<TestCategoryModel> testCategoryList = TestCategoryModel.getCategoryList();
-    return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(
-              delegate: CustomSliverAppBar(
-                expandedHeight: (mediaQueryData.size.height - mediaQueryData.padding.top) * 0.35,
-                titel: Text(
-                  "Test Category",
-                  textScaleFactor: 1,
-                  style: StaticStyle.textStyle(
-                    fontSide: 0.03,
-                    fontColor: StaticColors.appBarContent,
+    final Constants constant = Constants(context);
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(constant.screenHeight * 0.2),
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: StaticColors.primary,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BackButton(),
+                Text(
+                  'Test By Categories',
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    height: mediaQueryData.size.height,
+                    color: StaticColors.backgroundColor,
+                    fontSize: 20,
                   ),
                 ),
-                backgroundColor: StaticColors.primary,
-                widgetInExpendedView: [
-                  const WidgetForExpendesView(
-                    titel: "Test Category",
-                    backgroundColor: StaticColors.primary,
-                  ),
-                ],
-                appbarleadingWidget: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
+              ],
+            ),
+          ),
+        ),
+        body: SafeArea(    
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: FutureBuilder(
+              future: TestController.getCategories(context),
+              builder: (context, snapshot){
+                List<TestCategory> categories = []; 
+                if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                  categories = snapshot.data as List<TestCategory> ;
+                }
+                return snapshot.connectionState == ConnectionState.done 
+                ? GridView.builder(
+                  itemCount: categories.length,
+                  itemBuilder: (context,index){
+                    return categories[index].render(context, constant);
                   },
-                  child: const SizedBox(
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: StaticColors.appBarContent,
-                    ),
-                  ),
-                ),
-                appbaraction: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.search,
-                      color: StaticColors.appBarContent,
-                    ),
-                  )
-                ],
-              ),
-              pinned: true,
+                  gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                )
+                : Container();
+              },
             ),
-            SliverPadding(
-              padding: EdgeInsets.only(
-                top: 10,
-                right: mediaQueryData.size.width * 0.08,
-                left: mediaQueryData.size.width * 0.08,
-                bottom: 10,
-              ),
-              sliver: SliverGrid.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: mediaQueryData.size.width * 0.05,
-                crossAxisSpacing: mediaQueryData.size.width * 0.05,
-                children: [
-                  ...testCategoryList.map(
-                    (e) => TestCategoryCard(
-                      testCategoryModel: e,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

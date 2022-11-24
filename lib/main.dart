@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pharmacy/ress/screen/splash.dart';
 
 import './ress/style/static_colors.dart';
 import './ress/utils/static_route.dart';
@@ -19,7 +20,7 @@ void main(List<String> args) {
   ]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Color(0xff29B6F6),
+      statusBarColor: StaticColors.primary,
     ),
   );
   runApp(const MyApp());
@@ -33,11 +34,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
         primaryColor: StaticColors.primary,
         scaffoldBackgroundColor: StaticColors.backgroundColor,
       ),
-      home: const MainScreen(),
+      home: const Splash(),
       routes: StaticRoute.getRoutes(),
     );
   }

@@ -10,7 +10,7 @@ class SearchBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
 
-    return Card(
+    return true ? Container():Card(
       color: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy/helpers/constants.dart';
 import 'package:pharmacy/ress/style/static_style.dart';
 import 'package:pharmacy/ress/style/static_colors.dart';
 import 'package:pharmacy/ress/utils/static_data.dart';
@@ -10,14 +11,17 @@ import '../../app_widget/custom_text.dart';
 
 class TestCategoryListWidget extends StatelessWidget {
   final String titel;
+  final List<TestCategory> categories;
   const TestCategoryListWidget({
     Key? key,
     required this.titel,
+    required this.categories,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
+    final Constants constant = Constants(context);
     return SizedBox(
       width: mediaQueryData.size.width,
       child: Padding(
@@ -39,7 +43,7 @@ class TestCategoryListWidget extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () => RouteController.gotoTestCategoryScreen(context),
+                  onTap: () => AppRouteController.gotoTestCategoryScreen(context),
                   child: CustomText(
                     text: StaticString.testListbuttonText,
                     textStyle: StaticStyle.textStyle(
@@ -57,12 +61,10 @@ class TestCategoryListWidget extends StatelessWidget {
             SizedBox(
               height: mediaQueryData.size.height * 0.2,
               child: ListView.separated(
-                itemCount: TestCategoryModel.getCategoryList().length,
+                itemCount: categories.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return TestCategoryCard(
-                    testCategoryModel: TestCategoryModel.getCategoryList()[index],
-                  );
+                  return categories[index].render(context, constant);
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox(
